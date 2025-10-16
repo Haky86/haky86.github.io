@@ -7,10 +7,15 @@ const themeBtn = document.querySelector('.mode-toggle');
 const navItemsWithSubmenu = document.querySelectorAll('nav ul li');
 
 /* -----------------------------
-   Load Saved Theme
+   Load Saved Theme or Default to Dark
 ------------------------------ */
 const savedTheme = localStorage.getItem('theme');
+
 if (savedTheme === 'light') {
+  document.body.classList.remove('dark');
+  themeBtn.textContent = '🌞️';
+} else {
+  // Default to dark mode
   document.body.classList.add('dark');
   themeBtn.textContent = '🌛️';
 }
@@ -45,8 +50,7 @@ navItemsWithSubmenu.forEach(item => {
    Theme Toggle with Persistence
 ------------------------------ */
 themeBtn.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-  const isDark = document.body.classList.contains('dark');
+  const isDark = document.body.classList.toggle('dark');
   themeBtn.textContent = isDark ? '🌛️' : '🌞️';
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
@@ -56,12 +60,8 @@ themeBtn.addEventListener('click', () => {
 ------------------------------ */
 window.addEventListener('resize', () => {
   if (window.innerWidth > 768) {
-    document.querySelectorAll('nav ul li ul').forEach(ul => {
-      ul.style.maxHeight = '';
-    });
-    document.querySelectorAll('nav ul li').forEach(li => {
-      li.classList.remove('show-submenu');
-    });
+    document.querySelectorAll('nav ul li ul').forEach(ul => ul.style.maxHeight = '');
+    document.querySelectorAll('nav ul li').forEach(li => li.classList.remove('show-submenu'));
     nav.classList.remove('show');
   }
 });
