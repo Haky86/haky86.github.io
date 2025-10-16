@@ -21,6 +21,7 @@ permalink: /blog/
           <h2 class="post-title">
             <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
           </h2>
+          <p class="post-date">{{ post.date | date: "%B %d, %Y" }}</p>
           {% assign clean_content = post.content | strip_html | remove: post.title | strip %}
           <p class="post-excerpt">
             {{ clean_content | truncate: 125 }}
@@ -95,5 +96,12 @@ permalink: /blog/
 
 .read-more:hover {
   background-color: #3a8ca9;
+}
+
+.post-date {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 0.75rem;
+  font-style: italic;
 }
 </style>
