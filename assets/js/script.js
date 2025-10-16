@@ -10,7 +10,7 @@ const navItemsWithSubmenu = document.querySelectorAll('nav ul li');
    Load Saved Theme
 ------------------------------ */
 const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
+if (savedTheme === 'light') {
   document.body.classList.add('dark');
   themeBtn.textContent = '🌛️';
 }
