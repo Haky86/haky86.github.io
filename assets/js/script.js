@@ -11,11 +11,11 @@ const navItemsWithSubmenu = document.querySelectorAll('nav ul li');
 ------------------------------ */
 const savedTheme = localStorage.getItem('theme');
 
+// Apply saved theme, default to dark only if no preference
 if (savedTheme === 'light') {
   document.body.classList.remove('dark');
   themeBtn.textContent = '🌞️';
 } else {
-  // Default to dark mode
   document.body.classList.add('dark');
   themeBtn.textContent = '🌛️';
 }
@@ -52,6 +52,7 @@ navItemsWithSubmenu.forEach(item => {
 themeBtn.addEventListener('click', () => {
   const isDark = document.body.classList.toggle('dark');
   themeBtn.textContent = isDark ? '🌛️' : '🌞️';
+  // Save preference correctly
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
