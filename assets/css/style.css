@@ -1,0 +1,251 @@
+/* -----------------------------
+   Reset and Base Styles
+------------------------------ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode base */
+body.dark {
+  background: #1e1e1e;
+  color: #eaeaea;
+}
+
+/* -----------------------------
+   Header Styles
+------------------------------ */
+header.header {
+  background-color: #2b6777;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 70px;
+  position: relative;
+  z-index: 1001;
+}
+
+.site-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.site-description {
+  font-weight: 400;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-toggle {
+  display: none;
+  font-size: 1.75rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.mode-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+
+.mode-toggle:hover {
+  transform: rotate(180deg);
+}
+
+/* -----------------------------
+   Navbar Styles
+------------------------------ */
+nav.navbar {
+  background-color: #3a8ca9;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  position: relative;
+}
+
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
+  display: block;
+  padding: 0.75rem 1.25rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+  background-color: #265a6f;
+  color: #d1e8f2;
+}
+
+nav ul li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #3a8ca9;
+  min-width: 180px;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+nav ul li:hover > ul {
+  display: flex;
+}
+
+nav ul li ul li a {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* -----------------------------
+   Main Content Styles
+------------------------------ */
+main.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  background-color: inherit;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  z-index: 1;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* -----------------------------
+   Footer Styles
+------------------------------ */
+footer.footer {
+  background-color: #2b6777;
+  color: white;
+  text-align: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+/* -----------------------------
+   Responsive / Mobile
+------------------------------ */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  nav.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-top: 80px;
+  }
+
+  nav.navbar.show {
+    max-height: 1000px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    background-color: #3a8ca9;
+  }
+
+  nav ul li a {
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+
+  nav ul li ul {
+    position: static;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+  }
+
+  nav ul li.show-submenu > ul {
+    display: flex;
+    max-height: 500px;
+  }
+
+  nav ul li ul li a {
+    padding-left: 2rem;
+  }
+}
+
+/* -----------------------------
+   Dark Mode Styles
+------------------------------ */
+body.dark header.header,
+body.dark footer.footer {
+  background-color: #111;
+  color: #eaeaea;
+}
+
+body.dark nav.navbar {
+  background-color: #222;
+}
+
+body.dark nav ul {
+  background-color: #222;
+}
+
+body.dark nav ul li a {
+  color: #eee;
+}
+
+body.dark nav ul li a:hover {
+  background-color: #333;
+}
+
+body.dark nav ul li ul {
+  background-color: #2a2a2a;
+}
+
+body.dark nav ul li ul li a {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+body.dark nav ul li ul li a:hover {
+  background-color: #3a3a3a;
+}
