@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "Welcome to Haky86"
+image: /assets/images/posts/welcome-thumb.jpg
 ---
 
 # Welcome to Haky86 Blog Section

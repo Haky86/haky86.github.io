@@ -6,10 +6,94 @@ permalink: /blog/
 
 <h1>Blog Posts</h1>
 
-<ul>
+<div class="blog-list">
   {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    </li>
+    <article class="post-preview">
+      <div class="post-content">
+        {% if post.image %}
+        <div class="post-thumb">
+          <a href="{{ post.url | relative_url }}">
+            <img src="{{ post.image | relative_url }}" alt="{{ post.title }} thumbnail">
+          </a>
+        </div>
+        {% endif %}
+        <div class="post-text">
+          <h2 class="post-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h2>
+          {% assign clean_content = post.content | strip_html | remove: post.title | strip %}
+          <p class="post-excerpt">
+            {{ clean_content | truncate: 125 }}
+          </p>
+          <a class="read-more" href="{{ post.url | relative_url }}">Read More →</a>
+        </div>
+      </div>
+    </article>
   {% endfor %}
-</ul>
+</div>
+
+<style>
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.post-preview {
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.post-preview:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.post-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.post-thumb img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.post-text {
+  flex: 1;
+}
+
+.post-title {
+  margin-bottom: 0.5rem;
+}
+
+.post-title a {
+  text-decoration: none;
+  color: #2b6777;
+}
+
+.post-excerpt {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.read-more {
+  text-decoration: none;
+  color: #fff;
+  background-color: #2b6777;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.read-more:hover {
+  background-color: #3a8ca9;
+}
+</style>
