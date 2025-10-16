@@ -1,0 +1,29 @@
+# Ruby and Jekyll
+.bundle/
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+Gemfile.lock
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+tmp/
+*.tmp
+*.bak
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node modules (if used)
+node_modules/
+
+# Other build artifacts
+vendor/

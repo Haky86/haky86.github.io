@@ -1,0 +1,7 @@
+# Site settings
+title: "Haky86"
+description: "AOSP Builds, Tutorials, and More!"
+url: "https://haky86.github.io"
+
+# Build settings
+markdown: kramdown
