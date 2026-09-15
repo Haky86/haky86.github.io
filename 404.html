@@ -1,0 +1,192 @@
+---
+permalink: /404.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found | Haky86</title>
+  <style>
+    /* --- CSS Theme Variables --- */
+    :root {
+      --bg-body: #121212;
+      --bg-surface: #1a1a1a;
+      --bg-surface-elevated: #222222;
+      --text-main: #e5e5e5;
+      --text-muted: #a3a3a3;
+      --text-heading: #ffffff;
+      --accent-primary: #dc2626;
+      --accent-hover: #b91c1c;
+      --accent-secondary: #f87171;
+      --border-color: #333333;
+      --shadow-color: rgba(0, 0, 0, 0.5);
+      --btn-glow: rgba(220, 38, 38, 0.4);
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f4f4f5;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #e4e4e7;
+      --text-main: #27272a;
+      --text-muted: #71717a;
+      --text-heading: #09090b;
+      --accent-primary: #dc2626;
+      --accent-hover: #991b1b;
+      --accent-secondary: #ef4444;
+      --border-color: #e4e4e7;
+      --shadow-color: rgba(0, 0, 0, 0.08);
+      --btn-glow: rgba(220, 38, 38, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+      line-height: 1.6;
+    }
+
+    .sticky-top-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--bg-surface);
+      border-bottom: 2px solid var(--accent-primary);
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+
+    header {
+      padding: 22px 30px;
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-body) 100%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-brand h1 {
+      font-size: 1.8rem;
+      color: var(--accent-primary);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .header-brand p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    main {
+      flex: 1 0 auto;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .error-code {
+      font-size: 6rem;
+      font-weight: 800;
+      color: var(--accent-primary);
+      line-height: 1;
+      margin-bottom: 12px;
+      text-shadow: 0 0 20px var(--btn-glow);
+    }
+
+    main h2 {
+      font-size: 2rem;
+      color: var(--text-heading);
+      margin-bottom: 16px;
+    }
+
+    main p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+
+    .home-btn {
+      background-color: var(--accent-primary);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .home-btn:hover {
+      background-color: var(--accent-hover);
+      box-shadow: 0 0 15px var(--btn-glow);
+    }
+
+    footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 1000;
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 20px;
+      background-color: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      box-shadow: 0 -4px 15px var(--shadow-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sticky-top-wrapper">
+    <header>
+      <div class="header-brand">
+        <h1>Haky86</h1>
+        <p>LineageOS Maintainer for multiple Android devices</p>
+      </div>
+    </header>
+  </div>
+
+  <main>
+    <div class="error-code">404</div>
+    <h2>Page Not Found</h2>
+    <p>The page you are looking for doesn't exist or has been moved.</p>
+    <a href="/" class="home-btn">Return to Safety</a>
+  </main>
+
+  <footer>
+    <span id="year"></span>&nbsp;Haky86. Built with ❤️ and Open Source tools.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const savedTheme = localStorage.getItem('user-theme');
+    if (savedTheme && savedTheme !== 'auto') {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  </script>
+</body>
+</html>
