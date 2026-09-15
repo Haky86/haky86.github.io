@@ -1,0 +1,44 @@
+---
+layout: default
+title: Blog
+---
+
+{% assign posts = paginator.posts | default: site.posts %}
+
+<div class="blog-grid">
+  {% for post in posts %}
+    <div class="blog-post">
+      <div class="blog-media">
+        {% if post.image %}
+          <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" width="345" height="175">
+        {% else %}
+          <div class="blog-placeholder">Haky86</div>
+        {% endif %}
+      </div>
+      <div class="blog-body">
+        <h3>{{ post.title }}</h3>
+        <div class="blog-meta">{{ post.date | date: "%B %d, %Y" }}</div>
+        <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
+        <a href="{{ post.url | relative_url }}" class="read-more-btn">Read more!</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% if paginator.total_pages > 1 %}
+  <div class="pagination">
+    {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-btn">Previous</a>
+    {% else %}
+      <button class="pagination-btn" disabled>Previous</button>
+    {% endif %}
+
+    <span class="pagination-info">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+
+    {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-btn">Next</a>
+    {% else %}
+      <button class="pagination-btn" disabled>Next</button>
+    {% endif %}
+  </div>
+{% endif %}
