@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  {% seo %}
+</head>
+<body>
+
+  <!-- Sticky Top Wrapper -->
+  <div class="sticky-top-wrapper">
+    {% include header.html %}
+    {% include navbar.html %}
+  </div>
+
+  <!-- Main Content -->
+  <main id="app">
+    {{ content }}
+  </main>
+
+  <!-- Sticky Footer -->
+  {% include footer.html %}
+
+  <!-- JavaScript Scripts -->
+  <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
+</body>
+</html>
