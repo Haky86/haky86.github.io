@@ -55,3 +55,72 @@ function toggleCard(headerElement) {
     card.classList.toggle('open');
   }
 }
+
+/* --- Live Site Search --- */
+let searchIndex = [];
+
+// Fetch index once on page load
+fetch('/search.json')
+  .then(response => response.json())
+  .then(data => {
+    searchIndex = data;
+  })
+  .catch(err => console.error('Failed to load search index:', err));
+
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInputs = document.querySelectorAll('.search-input');
+
+  searchInputs.forEach(input => {
+    const container = input.closest('.search-container');
+    let resultsContainer = container ? container.querySelector('.search-results-dropdown') : null;
+
+    if (!resultsContainer && container) {
+      resultsContainer = document.createElement('div');
+      resultsContainer.className = 'search-results-dropdown';
+      container.appendChild(resultsContainer);
+    }
+
+    input.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+
+      if (query.length < 2) {
+        if (resultsContainer) resultsContainer.classList.remove('active');
+        return;
+      }
+
+      const matches = searchIndex.filter(item => {
+        const titleMatch = item.title && item.title.toLowerCase().includes(query);
+        const contentMatch = item.content && item.content.toLowerCase().includes(query);
+        return titleMatch || contentMatch;
+      }).slice(0, 6); // Limit results to 6 items
+
+      renderSearchResults(matches, resultsContainer);
+    });
+  });
+
+  // Close search results when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-container')) {
+      document.querySelectorAll('.search-results-dropdown').forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+    }
+  });
+});
+
+function renderSearchResults(results, container) {
+  if (!container) return;
+
+  if (results.length === 0) {
+    container.innerHTML = '<div class="search-result-item" style="color: var(--text-muted);">No results found</div>';
+  } else {
+    container.innerHTML = results.map(item => `
+      <a href="${item.url}" class="search-result-item">
+        <div class="search-result-type">${item.type}</div>
+        <div class="search-result-title">${item.title}</div>
+      </a>
+    `).join('');
+  }
+
+  container.classList.add('active');
+}

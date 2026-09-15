@@ -1,0 +1,16 @@
+---
+layout: null
+---
+[
+  {% assign collections = site.posts | concat: site.pages %}
+  {% for item in collections %}
+    {% unless item.url contains '/assets/' or item.url contains 'search.json' or item.url contains '404' %}
+    {
+      "title": {{ item.title | default: item.name | jsonify }},
+      "url": {{ item.url | relative_url | jsonify }},
+      "content": {{ item.content | strip_html | strip_newlines | escape | jsonify }},
+      "type": {% if item.layout == "post" %}"Post"{% else %}"Page"{% endif %}
+    }{% unless forloop.last %},{% endunless %}
+    {% endunless %}
+  {% endfor %}
+]
