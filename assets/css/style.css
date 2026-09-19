@@ -1,0 +1,675 @@
+/* ==========================================================================
+   CSS Variables & Themes
+   ========================================================================== */
+
+/* Light Mode (Default) */
+:root {
+    --bg-color: #f8f9fa;
+    --header-bg: #e9ecef;
+    --nav-bg: #dee2e6;
+    --nav-hover: #ced4da;
+    --nav-active: #adb5bd;
+    --text-main: #212529;
+    --text-muted: #6c757d;
+    --border-color: #dee2e6;
+    --card-bg: #ffffff;
+    --placeholder-bg: #ced4da;
+    --btn-bg: #e9ecef;
+    --btn-hover: #ced4da;
+    --link-color: #0d6efd;
+    --link-hover: #0a58ca;
+}
+
+/* Dark Mode Overrides */
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --header-bg: #1e1e1e;
+    --nav-bg: #2d2d2d;
+    --nav-hover: #3d3d3d;
+    --nav-active: #4d4d4d;
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-color: #333333;
+    --card-bg: #1e1e1e;
+    --placeholder-bg: #333333;
+    --btn-bg: #2d2d2d;
+    --btn-hover: #3d3d3d;
+    --link-color: #4dabf7;
+    --link-hover: #74c0fc;
+}
+
+/* ==========================================================================
+   Global Reset & Base Styles
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    /* Prevent layout shifts when scrollbar toggles */
+    scrollbar-gutter: stable;
+    background-color: var(--bg-color);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   Sticky Top Container (Header & Navigation)
+   ========================================================================== */
+
+.sticky-top-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Header */
+header {
+    background-color: var(--header-bg);
+    padding: 22px 30px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header-title h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    color: var(--text-main);
+}
+
+.header-title p {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+/* Theme Switcher */
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    background-color: var(--nav-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 4px;
+    gap: 4px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-btn {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+}
+
+.theme-btn.active {
+    background-color: var(--card-bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation Bar */
+nav {
+    background-color: var(--nav-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+
+/* Mobile Toggle Button */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    padding: 12px 20px;
+    cursor: pointer;
+    color: var(--text-main);
+    width: 100%;
+    text-align: left;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin: 0;
+}
+
+.nav-link {
+    display: block;
+    padding: 15px 22px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    background-color: var(--nav-hover);
+}
+
+/* ==========================================================================
+   Search Widget Section
+   ========================================================================== */
+
+.search-section {
+    background-color: transparent;
+    padding: 15px 20px;
+}
+
+.search-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1rem;
+    color: var(--text-main);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--text-muted);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Search Results Dropdown */
+.search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 350px;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.search-results.active {
+    display: block;
+}
+
+.search-result-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background-color: var(--header-bg);
+}
+
+.search-result-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-result-type {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 2px 6px;
+    background-color: var(--nav-bg);
+    border-radius: 3px;
+    color: var(--text-muted);
+}
+
+.search-result-snippet {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.no-results {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* ==========================================================================
+   Main Content Layout & General Elements
+   ========================================================================== */
+
+main {
+    flex: 1;
+    padding: 20px 20px 40px 20px;
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.page-view {
+    display: none;
+}
+
+.page-view.active {
+    display: block;
+}
+
+main h2 {
+    font-size: 1.75rem;
+    margin-bottom: 15px;
+    color: var(--text-main);
+}
+
+main h3 {
+    font-size: 1.4rem;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    color: var(--text-main);
+}
+
+main p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+/* Device Details Lists */
+.device-details-list {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: var(--text-main);
+}
+
+.device-details-list > li {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+.device-details-sublist {
+    margin-left: 24px;
+    list-style-type: circle;
+}
+
+.device-details-sublist li {
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.external-link {
+    color: var(--link-color);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.external-link:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Blog & Post Views
+   ========================================================================== */
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px 25px;
+    margin: 10px auto;
+}
+
+.post-card {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.post-banner-placeholder {
+    width: 100%;
+    height: 180px;
+    background-color: var(--placeholder-bg);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-main);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    user-select: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.post-title-link {
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.post-title-link:hover {
+    color: var(--text-muted);
+}
+
+.post-excerpt {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-meta,
+.blog-meta {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+    margin-top: auto;
+}
+
+/* Single Post Layout Styles */
+.post {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.post-header {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.post-content {
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* Pagination Control */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+.page-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: var(--nav-hover);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-info {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Samsung Devices Section & Collapsible Cards
+   ========================================================================== */
+
+.devices-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 35px auto 0 auto;
+    max-width: 1100px;
+    width: 100%;
+}
+
+.device-card {
+    flex: 1;
+    width: 100%;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    align-self: flex-start;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.device-card-header {
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.device-card-header:hover {
+    background-color: var(--header-bg);
+}
+
+.device-card-header h3 {
+    font-size: 1.3rem;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.arrow-icon {
+    font-size: 0.85rem;
+    transition: transform 0.3s ease;
+    color: var(--text-muted);
+}
+
+.device-card-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease-in-out, padding 0.35s ease-in-out;
+    padding: 0 20px;
+}
+
+.device-card.open .device-card-content {
+    max-height: 200px;
+    padding: 0 20px 20px 20px;
+}
+
+.device-card.open .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.device-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.device-btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 16px;
+    background-color: var(--btn-bg);
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+}
+
+.device-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+/* ==========================================================================
+   Sticky Footer
+   ========================================================================== */
+
+footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    background-color: var(--header-bg);
+    padding: 20px 30px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+footer .heart {
+    color: #e0245e;
+}
+
+/* ==========================================================================
+   Responsive Mobile Styles
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    header {
+        padding: 15px 20px;
+    }
+
+    .header-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .header-title p {
+        font-size: 0.85rem;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--nav-bg);
+        flex-direction: column;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+        padding: 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-menu.is-open {
+        max-height: 300px;
+        transition: max-height 0.35s ease-in-out;
+    }
+
+    .nav-link {
+        padding: 12px 20px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .search-section {
+        padding: 12px 15px;
+    }
+
+    main {
+        padding: 15px 15px 30px 15px;
+    }
+
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .devices-grid {
+        flex-direction: column;
+        align-items: center;
+        max-width: 500px;
+    }
+
+    .device-card {
+        align-self: center;
+    }
+}
