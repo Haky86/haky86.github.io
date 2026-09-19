@@ -1,0 +1,13 @@
+# Jekyll output & cache
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Ruby & Bundler files
+.bundle/
+vendor/
+Gemfile.lock
+
+# Operating System Files
+.DS_Store
+Thumbs.db
