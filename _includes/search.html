@@ -14,13 +14,15 @@
 <script>
   window.siteSearchData = {
     pages: [
-      {% assign searchable_pages = site.pages | where_exp: "p", "p.title != nil and p.searchable != false" %}
+      {% assign searchable_pages = site.pages | where_exp: "item", "item.title" %}
       {% for page in searchable_pages %}
-      {
-        "title": {{ page.title | jsonify }},
-        "url": {{ page.url | relative_url | jsonify }},
-        "excerpt": {{ page.excerpt | strip_html | strip_newlines | truncate: 120 | jsonify }}
-      }{% unless forloop.last %},{% endunless %}
+        {% unless page.searchable == false %}
+        {
+          "title": {{ page.title | jsonify }},
+          "url": {{ page.url | relative_url | jsonify }},
+          "excerpt": {{ page.excerpt | default: page.content | strip_html | strip_newlines | truncate: 120 | jsonify }}
+        }{% unless forloop.last %},{% endunless %}
+        {% endunless %}
       {% endfor %}
     ],
     posts: [
