@@ -1,13 +1,14 @@
 <header>
-  <div class="header-brand">
-    <h1>{{ site.title }}</h1>
-    <p>{{ site.description }}</p>
+  <div class="header-title-container">
+    <h1>
+      <a href="{{ '/' | relative_url }}">{{ site.title | default: "Haky86" }}</a>
+    </h1>
+    <p>{{ site.description | default: "LineageOS Maintainer for multiple Android devices" }}</p>
   </div>
 
-  <!-- Theme Switcher Control -->
-  <div class="theme-switcher-container">
-    <button class="theme-btn" id="theme-dark" title="Dark Mode" onclick="setTheme('dark')">🌝️</button>
-    <button class="theme-btn" id="theme-light" title="Light Mode" onclick="setTheme('light')">🌞️</button>
-    <button class="theme-btn" id="theme-auto" title="System Preference" onclick="setTheme('auto')">💻️</button>
+  <div class="theme-switcher-container" role="radiogroup" aria-label="Theme selection">
+    <button class="theme-btn" id="themeDarkBtn" title="Dark Mode" aria-label="Dark Mode">🌝️</button>
+    <button class="theme-btn" id="themeLightBtn" title="Light Mode" aria-label="Light Mode">🌞️</button>
+    <button class="theme-btn" id="themeAutoBtn" title="Automated Detection" aria-label="Automated Detection">📱️</button>
   </div>
 </header>

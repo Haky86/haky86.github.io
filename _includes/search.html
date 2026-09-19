@@ -1,0 +1,36 @@
+<div class="search-widget-container">
+  <div class="search-input-wrapper">
+    <input 
+      type="text" 
+      id="searchInput" 
+      class="search-input" 
+      placeholder="Search for posts &amp; pages.." 
+      autocomplete="off"
+    />
+    <div id="searchResultsDropdown" class="search-results-dropdown"></div>
+  </div>
+</div>
+
+<script>
+  window.siteSearchData = {
+    pages: [
+      {% assign searchable_pages = site.pages | where_exp: "p", "p.title != nil and p.searchable != false" %}
+      {% for page in searchable_pages %}
+      {
+        "title": {{ page.title | jsonify }},
+        "url": {{ page.url | relative_url | jsonify }},
+        "excerpt": {{ page.excerpt | strip_html | strip_newlines | truncate: 120 | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ],
+    posts: [
+      {% for post in site.posts %}
+      {
+        "title": {{ post.title | jsonify }},
+        "url": {{ post.url | relative_url | jsonify }},
+        "excerpt": {{ post.excerpt | default: post.content | strip_html | strip_newlines | truncate: 120 | jsonify }}
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  };
+</script>

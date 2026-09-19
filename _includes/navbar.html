@@ -1,22 +1,27 @@
-<nav>
+<nav class="navbar">
   <div class="nav-container">
-    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰ Menu</button>
-    
-    <div class="mobile-menu" id="mobileMenu">
-      <ul class="nav-links">
-        <li><a href="{{ '/' | relative_url }}">Home</a></li>
-        <li><a href="{{ '/blog' | relative_url }}">Blog</a></li>
-        <li><a href="{{ '/samsung' | relative_url }}">Samsung</a></li>
-        <li><a href="{{ '/about' | relative_url }}">About Me</a></li>
-      </ul>
-      
-      <div class="search-container mobile-search">
-        <input type="text" class="search-input" placeholder="Search..">
-      </div>
-    </div>
-
-    <div class="search-container desktop-search">
-      <input type="text" class="search-input" placeholder="Search..">
-    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      &#9776;
+    </button>
+    <ul class="nav-links" id="navLinks">
+      {% for nav_item in site.navigation %}
+        {% assign is_active = false %}
+        {% if page.url == nav_item.url %}
+          {% assign is_active = true %}
+        {% elsif nav_item.url != '/' and page.url contains nav_item.url %}
+          {% assign is_active = true %}
+        {% endif %}
+        <li>
+          <a href="{{ nav_item.url | relative_url }}" class="nav-item{% if is_active %} active{% endif %}">
+            {{ nav_item.title }}
+          </a>
+        </li>
+      {% else %}
+        <li><a href="{{ '/' | relative_url }}" class="nav-item{% if page.url == '/' %} active{% endif %}">Home</a></li>
+        <li><a href="{{ '/blog/' | relative_url }}" class="nav-item{% if page.url contains '/blog' %} active{% endif %}">Blog</a></li>
+        <li><a href="{{ '/samsung/' | relative_url }}" class="nav-item{% if page.url contains '/samsung' %} active{% endif %}">Samsung</a></li>
+        <li><a href="{{ '/about/' | relative_url }}" class="nav-item{% if page.url contains '/about' %} active{% endif %}">About Me</a></li>
+      {% endfor %}
+    </ul>
   </div>
 </nav>

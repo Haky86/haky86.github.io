@@ -3,29 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }} | {{ site.title }}</title>
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title | default: "Haky86" }}</title>
   
-  <!-- CSS Stylesheets -->
+  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  
+  {% feed_meta %}
   {% seo %}
+
+<script>
+    (function() {
+      var savedMode = localStorage.getItem('theme-mode') || 'auto';
+      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedMode === 'dark' || (savedMode === 'auto' && systemDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
 </head>
 <body>
 
-  <!-- Sticky Top Wrapper -->
-  <div class="sticky-top-wrapper">
-    {% include header.html %}
-    {% include navbar.html %}
-  </div>
+  {% include header.html %}
 
-  <!-- Main Content -->
-  <main id="app">
+  {% include navbar.html %}
+
+  {% include search.html %}
+
+  <main id="mainContainer">
     {{ content }}
   </main>
 
-  <!-- Sticky Footer -->
   {% include footer.html %}
 
-  <!-- JavaScript Scripts -->
+  <!-- Main JavaScript File -->
   <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
+
 </body>
 </html>
