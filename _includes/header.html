@@ -1,0 +1,17 @@
+<!-- Header -->
+<header>
+    <div class="header-title">
+        <h1>
+            <a href="{{ '/' | relative_url }}" style="color: inherit; text-decoration: none;">
+                {{ site.title | escape }}
+            </a>
+        </h1>
+        <p>{{ site.description | escape }}</p>
+    </div>
+    <!-- Theme Switcher Container -->
+    <div class="theme-switcher">
+        <button class="theme-btn" id="btn-light" title="Light mode" onclick="setTheme('light')">🌞️</button>
+        <button class="theme-btn" id="btn-dark" title="Dark mode" onclick="setTheme('dark')">🌝️</button>
+        <button class="theme-btn" id="btn-auto" title="Automated detection" onclick="setTheme('auto')">📱️</button>
+    </div>
+</header>
