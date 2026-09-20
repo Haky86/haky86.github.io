@@ -1,0 +1,10 @@
+---
+layout: null
+permalink: /robots.txt
+---
+User-agent: *
+Allow: /
+
+# Exclude error pages and search indexing files
+Disallow: /404.html
+Disallow: /search.json
