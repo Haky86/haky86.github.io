@@ -3,7 +3,6 @@ layout: post
 title: Welcome to Haky86 Website
 date: 2026-09-20 00:30 +0200
 description: "Welcome to the official Haky86 Website"
-permalink: /blog/welcome-to-haky86-website/
 ---
 
 <p>Welcome to the official <strong>Haky86</strong> website!</p>
