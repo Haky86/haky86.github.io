@@ -4,45 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} | {{ site.title }}</title>
-
-    <!-- Synchronous Inline Script to prevent Dark Mode blinking on page transition -->
+    
+    <!-- Prevent theme flash/blink on page transitions -->
     <script>
         (function() {
-            var savedTheme = localStorage.getItem('theme') || 'auto';
-            var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'dark' || (savedTheme === 'auto' && systemDark)) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
+            var mode = localStorage.getItem('user-theme-mode') || 'auto';
+            var activeTheme = mode;
+            if (mode === 'auto') {
+                activeTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             }
+            document.documentElement.setAttribute('data-theme', activeTheme);
         })();
     </script>
 
-    {% seo %}
-
-    <!-- Path to CSS -->
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
 
-    <!-- Top Sticky Wrapper for Header & Navigation -->
-    <div class="sticky-top-wrapper">
-        {% include header.html %}
-        {% include navbar.html %}
-    </div>
-
-    <!-- Transparent Search Section -->
+    {% include header.html %}
+    {% include navbar.html %}
     {% include search.html %}
 
-    <!-- Main Content Body -->
     <main>
         {{ content }}
     </main>
 
-    <!-- Sticky Footer -->
     {% include footer.html %}
 
-    <!-- Path to JavaScript -->
     <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
 </body>
 </html>

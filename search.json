@@ -1,23 +1,30 @@
 ---
 layout: null
-permalink: /search.json
 ---
 [
-  {% assign search_pages = site.pages | where_exp: "item", "item.search != false" | where_exp: "item", "item.title != nil" %}
-  {% for page in search_pages %}
-    {
-      "title": {{ page.title | jsonify }},
-      "type": "Page",
-      "url": {{ page.url | relative_url | jsonify }},
-      "content": {{ page.content | strip_html | strip_newlines | replace: '  ', ' ' | jsonify }}
-    }{% if forloop.last == false or site.posts.size > 0 %},{% endif %}
-  {% endfor %}
-  {% for post in site.posts %}
-    {
-      "title": {{ post.title | jsonify }},
-      "type": "Post",
-      "url": {{ post.url | relative_url | jsonify }},
-      "content": {{ post.content | strip_html | strip_newlines | replace: '  ', ' ' | jsonify }}
-    }{% if forloop.last == false %},{% endif %}
+  {% assign search_pages = site.pages | where_exp: "item", "item.search != false" %}
+  {% assign search_posts = site.posts %}
+  {% assign all_items = search_pages | concat: search_posts %}
+  {% assign first_item = true %}
+  {% for item in all_items %}
+    {% if item.title and item.url != "/search.json" %}
+      {% assign raw_slug = item.slug | default: item.url %}
+      {% assign slug_str = raw_slug | replace: "/", " " | replace: ".html", "" | slugify %}
+      {% assign keywords_array = slug_str | split: "-" %}
+      {% if first_item %}{% assign first_item = false %}{% else %},{% endif %}
+      {
+        "title": {{ item.title | jsonify }},
+        "url": {{ item.url | relative_url | jsonify }},
+        "slug": {{ item.url | jsonify }},
+        "type": {% if item.date %}"post"{% else %}"page"{% endif %},
+        "keywords": [
+          {% for word in keywords_array %}
+            {% if word != "" %}
+              {{ word | jsonify }}{% unless forloop.last %},{% endunless %}
+            {% endif %}
+          {% endfor %}
+        ]
+      }
+    {% endif %}
   {% endfor %}
 ]

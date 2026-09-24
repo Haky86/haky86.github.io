@@ -1,152 +1,166 @@
 /* ==========================================================================
-   Theme Switcher Logic
+   assets/js/script.js
    ========================================================================== */
 
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+document.addEventListener('DOMContentLoaded', () => {
+    // ---------------- DYNAMIC YEAR ----------------
+    const yearEl = document.getElementById('year');
+    if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+    }
 
-function setTheme(mode) {
-    localStorage.setItem('theme', mode);
-    applyTheme(mode);
-}
+    // ---------------- DARK / LIGHT / AUTO MODE SWITCHER ----------------
+    const themeSwitcherBtn = document.getElementById('themeSwitcher');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlElement = document.documentElement;
+    const systemDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-function applyTheme(mode) {
-    const root = document.documentElement;
-    
-    // Highlight active theme switcher button
-    document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+    // Modes order: auto -> light -> dark
+    const modes = ['auto', 'light', 'dark'];
+    let currentMode = localStorage.getItem('user-theme-mode') || 'auto';
 
-    const btnDark = document.getElementById('btn-dark');
-    const btnLight = document.getElementById('btn-light');
-    const btnAuto = document.getElementById('btn-auto');
+    function applyTheme(mode) {
+        let activeTheme = mode;
+        if (mode === 'auto') {
+            activeTheme = systemDarkQuery.matches ? 'dark' : 'light';
+        }
+        
+        htmlElement.setAttribute('data-theme', activeTheme);
 
-    if (mode === 'dark') {
-        root.setAttribute('data-theme', 'dark');
-        if (btnDark) btnDark.classList.add('active');
-    } else if (mode === 'light') {
-        root.setAttribute('data-theme', 'light');
-        if (btnLight) btnLight.classList.add('active');
-    } else {
-        // Auto / System Detection Mode
-        if (btnAuto) btnAuto.classList.add('active');
-        if (systemPrefersDark.matches) {
-            root.setAttribute('data-theme', 'dark');
-        } else {
-            root.setAttribute('data-theme', 'light');
+        if (themeIcon && themeSwitcherBtn) {
+            if (mode === 'auto') {
+                themeIcon.textContent = '📱️';
+                themeSwitcherBtn.title = 'Theme: System (Auto)';
+            } else if (mode === 'light') {
+                themeIcon.textContent = '🌞️';
+                themeSwitcherBtn.title = 'Theme: Light';
+            } else if (mode === 'dark') {
+                themeIcon.textContent = '🌝️';
+                themeSwitcherBtn.title = 'Theme: Dark';
+            }
         }
     }
-}
 
-// Listen for OS system theme changes if set to auto mode
-systemPrefersDark.addEventListener('change', () => {
-    const currentMode = localStorage.getItem('theme') || 'auto';
-    if (currentMode === 'auto') {
-        applyTheme('auto');
+    if (themeSwitcherBtn) {
+        themeSwitcherBtn.addEventListener('click', () => {
+            const currentIndex = modes.indexOf(currentMode);
+            currentMode = modes[(currentIndex + 1) % modes.length];
+            localStorage.setItem('user-theme-mode', currentMode);
+            applyTheme(currentMode);
+        });
     }
-});
 
-// Initialize Theme on initial page load
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme') || 'auto';
-    applyTheme(savedTheme);
-});
+    // System preference change listener
+    systemDarkQuery.addEventListener('change', () => {
+        if (currentMode === 'auto') {
+            applyTheme('auto');
+        }
+    });
 
-/* ==========================================================================
-   Mobile Navigation Toggle
-   ========================================================================== */
+    // Synchronize button UI state with pre-loaded theme
+    applyTheme(currentMode);
 
-document.addEventListener('DOMContentLoaded', () => {
+    // ---------------- DYNAMIC NAV POSITIONING ----------------
+    function updateNavPosition() {
+        const header = document.getElementById('siteHeader');
+        const nav = document.getElementById('siteNav');
+        if (window.innerWidth > 768 && header && nav) {
+            nav.style.top = header.offsetHeight + 'px';
+        } else if (nav) {
+            nav.style.top = '0px';
+        }
+    }
+
+    window.addEventListener('resize', updateNavPosition);
+    updateNavPosition();
+
+    // ---------------- MOBILE MENU TOGGLE ----------------
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
 
     if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function () {
-            navMenu.classList.toggle('is-open');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
         });
     }
-});
 
-/* ==========================================================================
-   Collapsible Samsung Device Cards
-   ========================================================================== */
-
-function toggleCard(cardId) {
-    const card = document.getElementById(cardId);
-    if (card) {
-        card.classList.toggle('open');
-    }
-}
-
-function closeAllCards() {
-    document.querySelectorAll('.device-card').forEach(card => {
-        card.classList.remove('open');
-    });
-}
-
-/* ==========================================================================
-   Client-Side Search Integration
-   ========================================================================== */
-
-document.addEventListener('DOMContentLoaded', () => {
+    // ---------------- SEARCH WIDGET & DROPDOWN (PAGES + POSTS) ----------------
     const searchInput = document.getElementById('searchInput');
     const searchResults = document.getElementById('searchResults');
+    let searchData = [];
 
-    if (!searchInput || !searchResults) return;
-
-    let searchIndex = [];
-
-    // Fetch search JSON index built by Jekyll
+    // Fetch posts and pages from generated search.json
     fetch('/search.json')
-        .then(response => response.json())
-        .then(data => {
-            searchIndex = data;
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         })
-        .catch(err => {
-            console.error('Failed to load search index:', err);
+        .then(data => {
+            searchData = data;
+        })
+        .catch(error => {
+            console.error('Error fetching search.json:', error);
         });
 
-    searchInput.addEventListener('input', function () {
-        const query = this.value.trim().toLowerCase();
-
-        if (query.length === 0) {
-            searchResults.classList.remove('active');
+    if (searchInput && searchResults) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim().toLowerCase();
             searchResults.innerHTML = '';
-            return;
-        }
 
-        const filteredResults = searchIndex.filter(item => 
-            (item.title && item.title.toLowerCase().includes(query)) || 
-            (item.content && item.content.toLowerCase().includes(query))
-        );
+            if (query === '') {
+                searchResults.classList.remove('active');
+                return;
+            }
 
-        searchResults.innerHTML = '';
+            const filteredItems = searchData.filter(item => {
+                const titleMatch = item.title && item.title.toLowerCase().includes(query);
+                const slugMatch = item.slug && item.slug.toLowerCase().includes(query);
+                const keywordMatch = Array.isArray(item.keywords) && item.keywords.some(kw => kw.toLowerCase().includes(query));
 
-        if (filteredResults.length === 0) {
-            searchResults.innerHTML = `<div class="no-results">No results found for "${this.value}"</div>`;
-        } else {
-            filteredResults.forEach(item => {
-                const resItem = document.createElement('div');
-                resItem.className = 'search-result-item';
-                resItem.innerHTML = `
-                    <div class="search-result-title">
-                        <span>${item.title}</span>
-                        <span class="search-result-type">${item.type || 'Page'}</span>
-                    </div>
-                    <div class="search-result-snippet">${item.content ? item.content.substring(0, 100) + '...' : ''}</div>
-                `;
-                resItem.addEventListener('click', () => {
-                    window.location.href = item.url;
-                });
-                searchResults.appendChild(resItem);
+                return titleMatch || slugMatch || keywordMatch;
             });
-        }
 
-        searchResults.classList.add('active');
-    });
+            if (filteredItems.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">No pages or posts found</div>';
+            } else {
+                filteredItems.forEach(item => {
+                    const resultItem = document.createElement('a');
+                    resultItem.className = 'search-result-item';
+                    resultItem.href = item.url;
+                    resultItem.style.textDecoration = 'none';
+                    resultItem.style.color = 'inherit';
+                    resultItem.style.display = 'block';
 
-    // Close search dropdown on click outside
-    document.addEventListener('click', function (e) {
-        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-            searchResults.classList.remove('active');
+                    resultItem.innerHTML = `
+                        <div class="search-result-title">${item.title}</div>
+                        <div class="search-result-slug">${item.slug}</div>
+                    `;
+
+                    searchResults.appendChild(resultItem);
+                });
+            }
+
+            searchResults.classList.add('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.remove('active');
+            }
+        });
+    }
+
+    // ---------------- DEVICE CARDS TOGGLE ----------------
+    const deviceCards = document.querySelectorAll('.device-card');
+
+    deviceCards.forEach(card => {
+        const header = card.querySelector('.card-header');
+        if (header) {
+            header.addEventListener('click', () => {
+                card.classList.toggle('open');
+            });
         }
     });
 });
