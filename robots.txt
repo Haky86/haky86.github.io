@@ -8,3 +8,6 @@ Allow: /
 # Exclude error pages and search indexing files
 Disallow: /404.html
 Disallow: /search.json
+
+# Sitemap location
+Sitemap: {{ '/sitemap.xml' | absolute_url }}
