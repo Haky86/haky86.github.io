@@ -15,12 +15,4 @@ sitemap: false
     </url>
     {% endunless %}
   {% endfor %}
-  {% for post in site.posts %}
-    <url>
-      <loc>{{ post.url | absolute_url | xml_escape }}</loc>
-      <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
-      <changefreq>weekly</changefreq>
-      <priority>0.8</priority>
-    </url>
-  {% endfor %}
 </urlset>
