@@ -3,22 +3,23 @@ layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% assign search_pages = site.pages | where_exp: "item", "item.sitemap != false" %}
-  {% assign search_posts = site.posts %}
-  {% assign all_items = search_pages | concat: search_posts %}
-  
-  {% for item in all_items %}
-    {% if item.url != "/search.json" and item.url != "/sitemap.xml" %}
+  {% assign valid_pages = site.pages | where_exp: "item", "item.sitemap != false" %}
+  {% for page in valid_pages %}
+    {% unless page.url contains '.css' or page.url contains '.js' or page.url contains '.json' or page.url contains '.txt' or page.url contains '.xml' %}
     <url>
-      <loc>{{ item.url | absolute_url }}</loc>
-      {% if item.date %}
-      <lastmod>{{ item.date | date_to_xmlschema }}</lastmod>
-      {% else %}
+      <loc>{{ page.url | absolute_url | xml_escape }}</loc>
       <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-      {% endif %}
-      <changefreq>{% if item.changefreq %}{{ item.changefreq }}{% else %}weekly{% endif %}</changefreq>
-      <priority>{% if item.priority %}{{ item.priority }}{% else %}0.8{% endif %}</priority>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
     </url>
-    {% endif %}
+    {% endunless %}
+  {% endfor %}
+  {% for post in site.posts %}
+    <url>
+      <loc>{{ post.url | absolute_url | xml_escape }}</loc>
+      <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+    </url>
   {% endfor %}
 </urlset>
