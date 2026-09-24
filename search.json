@@ -8,8 +8,12 @@ layout: null
   {% assign first_item = true %}
   {% for item in all_items %}
     {% if item.title and item.url != "/search.json" %}
-      {% assign raw_slug = item.slug | default: item.url %}
-      {% assign slug_str = raw_slug | replace: "/", " " | replace: ".html", "" | slugify %}
+      {% assign raw_slug = item.slug | default: item.url | replace: "/", " " | replace: ".html", "" | strip %}
+      {% if raw_slug != "" %}
+        {% assign slug_str = raw_slug | slugify %}
+      {% else %}
+        {% assign slug_str = "home" %}
+      {% endif %}
       {% assign keywords_array = slug_str | split: "-" %}
       {% if first_item %}{% assign first_item = false %}{% else %},{% endif %}
       {
