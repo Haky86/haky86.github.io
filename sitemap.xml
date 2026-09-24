@@ -1,18 +1,35 @@
----
-layout: null
-sitemap: false
----
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% assign valid_pages = site.pages | where_exp: "item", "item.sitemap != false" %}
-  {% for page in valid_pages %}
-    {% unless page.url contains '.css' or page.url contains '.js' or page.url contains '.json' or page.url contains '.txt' or page.url contains '.xml' %}
-    <url>
-      <loc>{{ page.url | absolute_url | xml_escape }}</loc>
-      <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-      <changefreq>weekly</changefreq>
-      <priority>0.8</priority>
-    </url>
-    {% endunless %}
-  {% endfor %}
+<?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+       <loc>https://haky86.github.io/</loc>
+       <lastmod>2026-09-24T13:58:05+00:00</lastmod>
+       <priority>1.0000</priority>
+  </url>
+  <url>
+       <loc>https://haky86.github.io/blog/</loc>
+       <lastmod>2026-09-24T13:58:05+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://haky86.github.io/samsung/</loc>
+       <lastmod>2026-09-24T13:58:05+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://haky86.github.io/about/</loc>
+       <lastmod>2026-09-24T13:58:05+00:00</lastmod>
+       <priority>0.8000</priority>
+  </url>
+  <url>
+       <loc>https://haky86.github.io/samsung/a23xq/</loc>
+       <lastmod>2026-09-24T13:58:05+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
+  <url>
+       <loc>https://haky86.github.io/samsung/a71/</loc>
+       <lastmod>2026-09-24T13:58:05+00:00</lastmod>
+       <priority>0.6400</priority>
+  </url>
 </urlset>
