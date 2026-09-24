@@ -2,6 +2,7 @@
 layout: default
 title: Samsung Galaxy A23 5G
 permalink: /samsung/a23xq/
+sitemap: false
 ---
 
 <h2>Samsung Galaxy A23 5G</h2>

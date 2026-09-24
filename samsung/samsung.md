@@ -2,6 +2,7 @@
 layout: default
 title: Samsung Devices
 permalink: /samsung/
+sitemap: true
 ---
 
 <h2>Samsung Devices</h2>
