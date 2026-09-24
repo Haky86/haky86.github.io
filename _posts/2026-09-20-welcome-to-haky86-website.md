@@ -2,7 +2,7 @@
 layout: default
 title: Welcome to Haky86 Website
 permalink: /blog/welcome-to-haky86-website
-sitemap: true
+sitemap: false
 ---
 
 <h2>Welcome to the official Haky86 website!</h2>
